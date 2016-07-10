@@ -6,6 +6,6 @@ Module for transcribing Cyrillic into Norwegian, using the Language Council of N
 To run test cases:
 
 ```
-npm install -g jasmine
+npm install -g jasmine-node
 jasmine-node kyrillisk.spec.js
 ```
