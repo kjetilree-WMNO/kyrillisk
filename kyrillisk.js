@@ -65,11 +65,97 @@ var russianMapping = {
     'я': 'ja'
 };
 
+var armenianMapping = {
+	'Ա': 'A',
+	'ա': 'a',
+	'Բ': 'B',
+	'բ': 'b',
+	'Գ': 'G',
+	'գ': 'g',
+	'Դ': 'D',
+	'դ': 'd',
+	'Ե': 'E',
+	'ե': 'e',
+	'Զ': 'Z',
+	'զ': 'z',
+	'Է': 'E',
+	'է': 'e',
+	'Ը': 'E',
+	'ը': 'e',
+	'Թ': 'T',
+	'թ': 't',
+	'Ժ': 'Zj',
+	'ժ': 'zj',
+	'Ի': 'I',
+	'ի': 'i',
+	'Լ': 'L',
+	'լ': 'l',
+	'Խ': 'Kh',
+	'խ': 'kh',
+	'Ծ': 'Ts',
+	'ծ': 'ts',
+	'Կ': 'K',
+	'կ': 'k',
+	'Հ': 'H',
+	'հ': 'h',
+	'Ձ': 'Dz',
+	'ձ': 'dz',
+	'Ղ': 'Gh',
+	'ղ': 'gh',
+	'Ճ': 'Tsj',
+	'ճ': 'tsj',
+	'Մ': 'M',
+	'մ': 'm',
+	'Յ': 'J',
+	'յ': 'j',
+	'Ն': 'N',
+	'ն': 'n',
+	'Շ': 'Sj',
+	'շ': 'sj',
+	'Ո': 'O',
+	'ո': 'o',
+	'Չ': 'Tsj',
+	'չ': 'tsj',
+	'Պ': 'P',
+	'պ': 'p',
+	'Ջ': 'Dzj',
+	'ջ': 'dzj',
+	'Ռ': 'R',
+	'ռ': 'r',
+	'Ս': 'S',
+	'ս': 's',
+	'Վ': 'V',
+	'վ': 'v',
+	'Տ': 'T',
+	'տ': 't',
+	'Ր': 'R',
+	'ր': 'r',
+	'Ց': 'Ts',
+	'ց': 'ts',
+	'Ւ': 'W',
+	'ւ': 'w',
+	'Փ': 'P',
+	'փ': 'p',
+	'Ք': 'K',
+	'ք': 'k',
+	'Օ': 'O',
+	'օ': 'o',
+	'Ֆ': 'F',
+	'ֆ': 'f',
+}
+
 var isRussianCharacter = function(char) {
     if (char.charCodeAt(0) >= 1040 && char.charCodeAt(0) <= 1103) {
         return true;
     }
     if (char.charCodeAt(0) === 1025 || char.charCodeAt(0) === 1105) {
+        return true;
+    }
+    return false;
+};
+
+var isArmenianCharacter = function(char) {
+    if (char.charCodeAt(0) >= 1329 && char.charCodeAt(0) <= 1414) {
         return true;
     }
     return false;
@@ -189,6 +275,88 @@ var transcribeFromRussian = function(cyrillicString) {
     return latinString;
 };
 
+/* Rules are from https://no.wikipedia.org/w/index.php?title=Wikipedia:Transkripsjon_fra_armensk&oldid=16967698  */
+var transcribeFromArmenian = function(armenianString) {
+	var latinString = [];
+	
+	/* Do the 'plain' transformations first */
+    var i;
+    for (i = 0; i < armenianString.length; i++) {
+        if (!isArmenianCharacter(armenianString[i])) {
+            latinString[i] = armenianString[i];
+        } else {
+            latinString[i] = armenianMapping[armenianString[i]];
+        }
+    }
+	
+	/* Special cases:  */
+	for (i = 0; i < armenianString.length; i++) {
+
+		/* Digraphs */
+		/* ու  */
+		if (armenianString[i - 1] === 'Ո' && armenianString[i] === 'ւ') {
+			latinString[i - 1] = undefined;
+			latinString[i] = 'U';
+		}
+		if (armenianString[i - 1] === 'ո' && armenianString[i] === 'ւ') {
+			latinString[i - 1] = undefined;
+			latinString[i] = 'u';
+		}
+		
+		/* իւ */
+		if (armenianString[i - 1] === 'Ի' && armenianString[i] === 'ւ') {
+			latinString[i - 1] = 'J';
+			latinString[i] = 'u';
+		}
+		if (armenianString[i - 1] === 'ի' && armenianString[i] === 'ւ') {
+			latinString[i - 1] = 'j';
+			latinString[i] = 'u';
+		}
+		
+		/* Ligature */
+		/* և -> ev, jev */
+		if (armenianString[i] === 'և') {
+			latinString[i] = 'ev';
+		}	
+	
+		/* 'Ե' and 'ե' special casing  */
+		if (armenianString[i - 1] === undefined || armenianString[i - 1] === ' ') {
+			if (armenianString[i] === 'Ե') {
+				latinString[i] = 'Je';
+			}
+			if (armenianString[i] === 'ե') {
+				latinString[i] = 'je';
+			}
+		}
+		
+		/* 'Ո' and 'ո' special casing  */
+		if (armenianString[i - 1] === undefined || armenianString[i - 1] === ' ') {
+			if (armenianString[i] === 'Ո') {
+				latinString[i] = 'Vo';
+			}
+			if (armenianString[i] === 'ո') {
+				latinString[i] = 'vo';
+			}
+		}
+		
+		/* 'Յ' and 'յ' special casing  */
+		if ((armenianString[i - 1] === 'Ծ' ||  armenianString[i - 1] === 'ծ' || armenianString[i - 1] === 'Ց' || armenianString[i - 1] === 'ց') && armenianString[i] === 'յ') {
+			latinString[i] = 'i';
+		}
+		if ((armenianString[i - 1] === 'Ս' ||  armenianString[i - 1] === 'ս') && armenianString[i] === 'յ') {
+			latinString[i] = 'i';
+		}
+		if ((armenianString[i - 1] === 'Զ' ||  armenianString[i - 1] === 'զ') && armenianString[i] === 'յ') {
+			latinString[i] = 'i';
+		}
+
+	}
+	
+	latinString = latinString.join('');
+	return latinString;
+}
+
 module.exports = {
-    transcribeFromRussian: transcribeFromRussian
+    transcribeFromRussian: transcribeFromRussian,
+	transcribeFromArmenian: transcribeFromArmenian
 }
