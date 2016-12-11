@@ -349,7 +349,9 @@ var transcribeFromArmenian = function(armenianString) {
 		if ((armenianString[i - 1] === 'Զ' ||  armenianString[i - 1] === 'զ') && armenianString[i] === 'յ') {
 			latinString[i] = 'i';
 		}
-
+		if ((armenianString[i - 1] === 'Ձ' ||  armenianString[i - 1] === 'ձ') && armenianString[i] === 'յ') {
+			latinString[i] = 'i';
+		}
 	}
 	
 	latinString = latinString.join('');

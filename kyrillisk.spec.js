@@ -487,5 +487,14 @@ describe('Armenian: ', function() {
     it('Transcribes Հովիկ Աբրահամյան to Hovik Abrahamjan', function() {
         expect(kyrillisk.transcribeFromArmenian('Հովիկ Աբրահամյան')).toBe('Hovik Abrahamjan');
     });
+	
+	it('Transcribes Ձյունահովազ to Dziunahovaz', function() {
+					expect(kyrillisk.transcribeFromArmenian('Ձյունահովազ')).toBe('Dziunahovaz');
+	});
+	
+	it('Transcribes Մելիք Ջանոյան to Melik Dzjanojan', function() {
+					expect(kyrillisk.transcribeFromArmenian('Մելիք Ջանոյան')).toBe('Melik Dzjanojan');
+	});	
+	
 
 });
