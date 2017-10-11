@@ -144,6 +144,76 @@ var armenianMapping = {
 	'ֆ': 'f',
 }
 
+var ukrainianMapping = {
+    'А': 'A',
+    'а': 'a',
+    'Б': 'B',
+    'б': 'b',
+    'В': 'V',
+    'в': 'v',
+    'Г': 'H',
+    'г': 'h',
+    'Ґ': 'G',
+    'ґ': 'g',
+    'Д': 'D',
+    'д': 'd',
+    'Е': 'E',
+    'е': 'e',
+    'Є': 'Je',
+    'є': 'je',
+    'Ж': 'Zj',
+    'ж': 'zj',
+    'З': 'Z',
+    'з': 'z',
+    'И': 'Y',
+    'и': 'y',
+    'І': 'I',
+    'і': 'i',
+    'Ї': 'Ji',
+    'ї': 'ji',
+    'Й': 'J',
+    'й': 'j',
+    'К': 'K',
+    'к': 'k',
+    'Л': 'L',
+    'л': 'l',
+    'М': 'M',
+    'м': 'm',
+    'Н': 'N',
+    'н': 'n',
+    'О': 'O',
+    'о': 'o',
+    'П': 'P',
+    'п': 'p',
+    'Р': 'R',
+    'р': 'r',
+    'С': 'S',
+    'с': 's',
+    'Т': 'T',
+    'т': 't',
+    'У': 'U',
+    'у': 'u',
+    'Ф': 'F',
+    'ф': 'f',
+    'Х': 'Kh',
+    'х': 'kh',
+    'Ц': 'Ts',
+    'ц': 'ts',
+    'Ч': 'Tsj',
+    'ч': 'tsj',
+    'Ш': 'Sj',
+    'ш': 'sj',
+    'Щ': 'Sjtsj',
+    'щ': 'sjtsj',
+    'Ь': ' ',
+    'ь': ' ',
+    'Ю': 'Ju',
+    'ю': 'ju',
+    'Я': 'Ja',
+    'я': 'ja',
+    '’': '’',
+}
+
 var isRussianCharacter = function(char) {
     if (char.charCodeAt(0) >= 1040 && char.charCodeAt(0) <= 1103) {
         return true;
@@ -156,6 +226,28 @@ var isRussianCharacter = function(char) {
 
 var isArmenianCharacter = function(char) {
     if (char.charCodeAt(0) >= 1329 && char.charCodeAt(0) <= 1414) {
+        return true;
+    }
+    return false;
+};
+
+var isUkrainianCharacter = function(char) {
+    if (char.charCodeAt(0) === 1028 || char.charCodeAt(0) === 1030 || char.charCodeAt(0) === 1031 || char.charCodeAt(0) === 1068) {
+        return true;
+    }
+    if (char.charCodeAt(0) >= 1040 && char.charCodeAt(0) <= 1065) {
+        return true;
+    }
+    if (char.charCodeAt(0) >= 1070 && char.charCodeAt(0) <= 1097) {
+        return true;
+    }
+    if (char.charCodeAt(0) === 1100 || char.charCodeAt(0) === 1102 || char.charCodeAt(0) === 1103 || char.charCodeAt(0) === 1108) {
+        return true;
+    }
+    if (char.charCodeAt(0) === 1110 || char.charCodeAt(0) === 1111 || char.charCodeAt(0) === 1168 || char.charCodeAt(0) === 1169) {
+        return true;
+    }
+    if (char === '’') {
         return true;
     }
     return false;
@@ -176,6 +268,17 @@ var isCheShaShcha = function(char) {
 var isEsZe = function(char) {
     return char === 'С' || char === 'с' || char === 'З' || char === 'з';
 };
+
+var removeDualJ = function(translatedString) {
+    for (i = 0; i < translatedString.length; i++) {
+        if (translatedString[i] === 'j') {
+            if (translatedString[i] === translatedString[i + 1]) {
+                translatedString = translatedString.slice(0, i) + translatedString.slice(i + 1, translatedString.length);
+            }
+        }
+    }
+    return translatedString;
+}
 
 // Data and rules are from http://www.sprakradet.no/upload/Rettskriving%20og%20ordlister/russ.pdf
 var transcribeFromRussian = function(cyrillicString) {
@@ -265,13 +368,7 @@ var transcribeFromRussian = function(cyrillicString) {
 
     latinString = latinString.join('');
     /* Special rule: Do not allow two consecutive 'j' characters  */
-    for (i = 0; i < latinString.length; i++) {
-        if (latinString[i] === 'j') {
-            if (latinString[i] === latinString[i + 1]) {
-                latinString = latinString.slice(0, i) + latinString.slice(i + 1, latinString.length);
-            }
-        }
-    }
+    latinString = removeDualJ(latinString);
     return latinString;
 };
 
@@ -358,7 +455,123 @@ var transcribeFromArmenian = function(armenianString) {
 	return latinString;
 }
 
+var transcribeFromUkrainian = function(ukrainianString) {
+
+	var latinString = [];
+	
+	/* Do the 'plain' transformations first */
+    var i;
+    for (i = 0; i < ukrainianString.length; i++) {
+        if (!isUkrainianCharacter(ukrainianString[i])) {
+            latinString[i] = ukrainianString[i];
+        } else {
+            latinString[i] = ukrainianMapping[ukrainianString[i]];
+        }
+    }
+
+    /* 'Є' and 'є' rule  */
+    for (i = 0; i < ukrainianString.length; i++) {
+
+        if (ukrainianString[i - 1] === 'З' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'З' ||
+            ukrainianString[i - 1] === 'з' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'з' ||
+            ukrainianString[i - 1] === 'С' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'С' ||
+            ukrainianString[i - 1] === 'с' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'с' ||
+            ukrainianString[i - 1] === 'Ц' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'Ц' ||
+            ukrainianString[i - 1] === 'ц' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'ц') {
+            if (ukrainianString[i] === 'Є') {
+                latinString[i] = 'Ie';
+            }
+            if (ukrainianString[i] === 'є') {
+                latinString[i] = 'ie';
+            }
+        }
+    }
+
+    /* 'Ь' and 'ь' rule  */
+    for (i = 0; i < ukrainianString.length; i++) {
+
+        if (isCyrillicConsonant(ukrainianString[i - 1]) && (ukrainianString[i + 1] === 'О' || ukrainianString[i + 1] === 'о')) {
+            if (ukrainianString[i] === 'Ь') {
+                latinString[i] = 'J';
+            }
+            if (ukrainianString[i] === 'ь') {
+                latinString[i] = 'j';
+            }
+        }
+
+        if (ukrainianString[i - 1] === 'З' && ukrainianString[i + 1] === 'о' ||
+            ukrainianString[i - 1] === 'з' && ukrainianString[i + 1] === 'о' ||
+            ukrainianString[i - 1] === 'С' && ukrainianString[i + 1] === 'о' ||
+            ukrainianString[i - 1] === 'с' && ukrainianString[i + 1] === 'о' ||
+            ukrainianString[i - 1] === 'Ц' && ukrainianString[i + 1] === 'о' ||
+            ukrainianString[i - 1] === 'ц' && ukrainianString[i + 1] === 'о') {
+            if (ukrainianString[i] === 'Ь') {
+                latinString[i] = 'I';
+            }
+            if (ukrainianString[i] === 'ь') {
+                latinString[i] = 'i';
+            }
+        }
+
+    }
+
+    /* 'Ю' and 'ю' rule */
+    for (i = 0; i < ukrainianString.length; i++) {
+
+        if (ukrainianString[i - 1] === 'З' ||
+            ukrainianString[i - 1] === 'з' ||
+            ukrainianString[i - 1] === 'С' ||
+            ukrainianString[i - 1] === 'с' ||
+            ukrainianString[i - 1] === 'Ц' ||
+            ukrainianString[i - 1] === 'ц') {
+            if (ukrainianString[i] === 'Ю') {
+                latinString[i] = 'Iu';
+            }
+            if (ukrainianString[i] === 'ю') {
+                latinString[i] = 'iu';
+            }
+        }
+    }
+
+    /* 'Я' and 'я' rule  */
+    for (i = 0; i < ukrainianString.length; i++) {
+
+        if (ukrainianString[i - 1] === 'З' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'З' ||
+            ukrainianString[i - 1] === 'з' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'з' ||
+            ukrainianString[i - 1] === 'С' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'С' ||
+            ukrainianString[i - 1] === 'с' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'с' ||
+            ukrainianString[i - 1] === 'Ц' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'Ц' ||
+            ukrainianString[i - 1] === 'ц' || 
+            ukrainianString[i - 1] === '’' && ukrainianString[i - 2] === 'ц') {
+            if (ukrainianString[i] === 'Я') {
+                latinString[i] = 'Ia';
+            }
+            if (ukrainianString[i] === 'я') {
+                latinString[i] = 'ia';
+            }
+        }
+    }
+
+    latinString = latinString.join('');
+    latinString = latinString.replace('’', '');
+    latinString = latinString.replace(' ', '');
+    latinString = removeDualJ(latinString);
+    return latinString.trim();
+}
+
 module.exports = {
     transcribeFromRussian: transcribeFromRussian,
-	transcribeFromArmenian: transcribeFromArmenian
+    transcribeFromArmenian: transcribeFromArmenian,
+    transcribeFromUkrainian: transcribeFromUkrainian,
 }

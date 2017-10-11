@@ -498,3 +498,163 @@ describe('Armenian: ', function() {
 	
 
 });
+
+describe('Ukrainian', () => {
+
+    it('should transcribe Анастасія to Anastasija', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Анастасія')).toBe('Anastasija');
+    })
+
+    it('should transcribe Богдан to Bohdan', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Богдан')).toBe('Bohdan');
+    })
+
+    it('should transcribe Вінниця to Vinnytsia', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Вінниця')).toBe('Vinnytsia');
+    })
+
+    it('should transcribe Горлівка to Horlivka', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Горлівка')).toBe('Horlivka');
+    })
+
+    it('should transcribe Ґалаґан to Galagan', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Ґалаґан')).toBe('Galagan');
+    })
+
+    it('should transcribe Донецьк to Donetsk', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Донецьк')).toBe('Donetsk');
+    })
+
+    it('should transcribe Ерстенюк to Erstenjuk', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Ерстенюк')).toBe('Erstenjuk');
+    })
+
+    it('should transcribe з’єднаний to ziednanyj', () => {
+        expect(kyrillisk.transcribeFromUkrainian('з’єднаний ')).toBe('ziednanyj');
+    })
+
+    it('should transcribe Єлизавета to Jelizaveta', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Єлизавета')).toBe('Jelyzaveta');
+    })
+
+    it('should transcribe Житомир to Zjytomyr', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Житомир')).toBe('Zjytomyr');
+    })
+
+    it('should transcribe Запоріжжя to Zaporizjzja', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Запоріжжя')).toBe('Zaporizjzja');
+    })
+
+    it('should transcribe Рибак to Rybak', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Рибак')).toBe('Rybak');
+    })
+
+    it('should transcribe Івано-Франківськ to Ivano-Frankivsk', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Івано-Франківськ')).toBe('Ivano-Frankivsk');
+    })
+
+    it('should transcribe Миколаїв to Mykolajiv', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Миколаїв')).toBe('Mykolajiv');
+    })
+
+    it('should transcribe Йосип to Josyp', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Йосип')).toBe('Josyp');
+    })
+
+    it('should transcribe Коваленко to Kovalenko', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Коваленко')).toBe('Kovalenko');
+    })
+
+    it('should transcribe Луганськ to Luhansk', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Луганськ')).toBe('Luhansk');
+    })
+
+    it('should transcribe Маріуполь to Mariupol', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Маріуполь')).toBe('Mariupol');
+    })
+
+    it('should transcribe Новіков to Novikov', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Новіков')).toBe('Novikov');
+    })
+
+    it('should transcribe Одеса to Odesa', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Одеса')).toBe('Odesa');
+    })
+
+    it('should transcribe Павленко to Pavlenko', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Павленко')).toBe('Pavlenko');
+    })
+
+    it('should transcribe Рівне to Rivne', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Рівне')).toBe('Rivne');
+    })
+
+    it('should transcribe Сімферополь to Simferopol', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Сімферополь')).toBe('Simferopol');
+    })
+
+    it('should transcribe Тернопіль to Ternopil', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Тернопіль')).toBe('Ternopil');
+    })
+
+    it('should transcribe Ульян to Uljan', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Ульян')).toBe('Uljan');
+    })
+
+    it('should transcribe Федір to Fedir', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Федір')).toBe('Fedir');
+    })
+
+    it('should transcribe Харків to Kharkiv', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Харків')).toBe('Kharkiv');
+    })
+
+    it('should transcribe Цибуля to Tsybulja', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Цибуля')).toBe('Tsybulja');
+    })
+
+    it('should transcribe Чернігів to Tsjernihiv', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Чернігів')).toBe('Tsjernihiv');
+    })
+
+    it('should transcribe Шевченко to Sjevtsjenko', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Шевченко')).toBe('Sjevtsjenko');
+    })
+
+    it('should transcribe Щепенчук to Sjtsjepentsjuk', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Щепенчук')).toBe('Sjtsjepentsjuk');
+    })
+
+    it('should transcribe Цьомко to Tsiomko', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Цьомко')).toBe('Tsiomko');
+    })
+
+    it('should transcribe Худьо to Khudjo', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Худьо')).toBe('Khudjo');
+    })
+
+    it('should transcribe Львів to Lviv', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Львів')).toBe('Lviv');
+    })
+
+    it('should transcribe Гандзюк to Handziuk', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Гандзюк')).toBe('Handziuk');
+    })
+
+    it('should transcribe Ющенко to Jusjtsjenko', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Ющенко')).toBe('Jusjtsjenko');
+    })
+
+    it('should transcribe Марусяк to Marusiak', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Марусяк')).toBe('Marusiak');
+    })
+
+    it('should transcribe Якименко to Jakymenko', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Якименко')).toBe('Jakymenko');
+    })
+
+    it('should transcribe Кам’янське to Kamjanske', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Кам’янське')).toBe('Kamjanske');
+    })
+
+});
