@@ -205,8 +205,8 @@ var ukrainianMapping = {
     'ш': 'sj',
     'Щ': 'Sjtsj',
     'щ': 'sjtsj',
-    'Ь': ' ',
-    'ь': ' ',
+    'Ь': '',
+    'ь': '',
     'Ю': 'Ju',
     'ю': 'ju',
     'Я': 'Ja',
@@ -565,7 +565,6 @@ var transcribeFromUkrainian = function(ukrainianString) {
 
     latinString = latinString.join('');
     latinString = latinString.replace('’', '');
-    latinString = latinString.replace(' ', '');
     latinString = removeDualJ(latinString);
     return latinString.trim();
 }

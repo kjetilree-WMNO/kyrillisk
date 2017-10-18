@@ -657,4 +657,12 @@ describe('Ukrainian', () => {
         expect(kyrillisk.transcribeFromUkrainian('Кам’янське')).toBe('Kamjanske');
     })
 
+    it('should transcribe Сергі́й Наза́рович Бу́бка to Serhíj Nazárovytsj Búbka', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Сергі́й Наза́рович Бу́бка')).toBe('Serhíj Nazárovytsj Búbka');
+    })
+
+    it('should transcribe Андрі́й Микола́йович Шевче́нко to Andríj Mykolájovytsj Sjevtsjénko', () => {
+        expect(kyrillisk.transcribeFromUkrainian('Андрі́й Микола́йович Шевче́нко')).toBe('Andríj Mykolájovytsj Sjevtsjénko');
+    })
+
 });
